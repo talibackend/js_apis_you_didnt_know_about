@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Status</title>
+</head>
+<body>
+    <div>Battery is <span id="charging_message"></span></div>
+    <div>Battery percent <span id="percent"></span>%</div>
+    <script>
+        navigator.getBattery().then((battery)=>{
+            document.getElementById("charging_message").innerHTML = battery.charging ? "charging" : "not charging"
+            document.getElementById("percent").innerHTML = battery.level * 100;
+            battery.addEventListener("chargingchange", ()=>{
+                document.getElementById("charging_message").innerHTML = battery.charging ? "charging" : "not charging"
+                document.getElementById("percent").innerHTML = battery.level * 100;
+            })
+        })
+    </script>
+</body>
+</html>

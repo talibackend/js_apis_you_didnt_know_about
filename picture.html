@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picture-in-Picture</title>
+</head>
+<body>
+  <video id="video" width="360" height="360" controls>
+    <source src="short.mp4">
+  </video>
+  <br>
+  <button id="pipButton">Enter Picture-in-Picture</button>
+
+  <script>
+    const video = document.getElementById('video');
+    const pipButton = document.getElementById('pipButton');
+
+    pipButton.addEventListener('click', async () => {
+        if (document.pictureInPictureElement) {
+            await document.exitPictureInPicture();
+            pipButton.innerHTML = "Enter Picture-in-Picture";
+        } else if (video.requestPictureInPicture) {
+            await video.requestPictureInPicture();
+            pipButton.innerHTML = "Exit Picture-in-Picture";
+        } else {
+            alert('Picture-in-Picture is not supported by your browser.');
+        }
+    });
+  </script>
+</body>
+</html>

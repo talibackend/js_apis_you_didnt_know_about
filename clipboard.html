@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard</title>
+</head>
+<body>
+    <input type="text" id="text" value="anything"><button id="btn">Copy Me</button>
+    <script>
+        document.getElementById("btn").addEventListener("click", ()=>{
+            navigator.clipboard.writeText(document.getElementById("text").value).then(()=>{
+                alert("Text Copied...");
+            });
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech to Text</title>
+</head>
+<body>
+  <h1>Speech to Text Example</h1>
+  <button id="start">Start Listening</button>
+  <button id="stop">Stop Listening</button>
+  <p id="result">Transcript: <span id="transcript"></span></p>
+  <script>
+    // Check if the browser supports SpeechRecognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+
+      // Configure recognition settings
+      recognition.lang = 'en-US'; // Set language
+      recognition.interimResults = false; // Show only final results
+      recognition.continuous = true; // Keep listening continuously
+
+      const startButton = document.getElementById('start');
+      const stopButton = document.getElementById('stop');
+      const transcriptDisplay = document.getElementById('transcript');
+
+      // Start listening
+      startButton.addEventListener('click', () => {
+        recognition.start();
+        console.log('Speech recognition started');
+      });
+
+      // Stop listening
+      stopButton.addEventListener('click', () => {
+        recognition.stop();
+        console.log('Speech recognition stopped');
+      });
+
+      // Handle recognition results
+      recognition.addEventListener('result', (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join('');
+        transcriptDisplay.textContent = transcript;
+        console.log('Transcript:', transcript);
+      });
+
+      // Handle errors
+      recognition.addEventListener('error', (event) => {
+        console.error('Speech recognition error:', event.error);
+      });
+
+      // Handle recognition end
+      recognition.addEventListener('end', () => {
+        console.log('Speech recognition service disconnected');
+      });
+    } else {
+      console.error('SpeechRecognition API is not supported in this browser.');
+      document.body.innerHTML = '<p>Your browser does not support the SpeechRecognition API.</p>';
+    }
+  </script>
+</body>
+</html>
