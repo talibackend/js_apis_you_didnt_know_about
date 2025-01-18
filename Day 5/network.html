@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network COnnectivity</title>
+</head>
+
+<body>
+    <style>
+        td{
+            padding: 10px;
+        }
+    </style>
+    <center>
+        <h1>Network Info</h1>
+        <table>
+            <tr>
+                <td>Effective Connection Type</td>
+                <td id="connection_type"></td>
+            </tr>
+            <tr>
+                <td>Downlink (Mbps)</td>
+                <td id="downlink"></td>
+            </tr>
+            <tr>
+                <td>Return Trip Time (ms)</td>
+                <td id="rtt"></td>
+            </tr>
+        </table>
+    </center>
+    <script>
+        const connection = navigator.connection;
+
+        const updateConnectionInfo = ()=>{
+            document.getElementById("connection_type").innerHTML = connection.effectiveType;
+            document.getElementById("downlink").innerHTML = connection.downlink;
+            document.getElementById("rtt").innerHTML = connection.rtt;
+        }
+
+        connection.addEventListener("change", updateConnectionInfo);
+        updateConnectionInfo();
+
+    </script>
+</body>
+
+</html>
