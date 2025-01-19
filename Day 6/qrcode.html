@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code</title>
+</head>
+<body>
+    <input type="file" id="qr_selector">
+    <div id="display_sector" style="display: none; align-items: center;">
+        <img src="" id="qr_img" height="100" width="100" alt="">
+        <span style="font-size: 2rem;">&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;</span>
+        <span style="font-size: 1rem;" id="result"></span>
+    </div>
+
+    <script>
+        const getById = (id)=>{
+            return document.getElementById(id);
+        }
+        let fileSelector = getById("qr_selector");
+        let detector = new BarcodeDetector({ formats : ["qr_code"] });
+        let display_container = getById("display_sector");
+        let image_src = getById("qr_img");
+        let result = getById("result");
+
+        fileSelector.addEventListener("change", ()=>{
+            display_container.style.display = "none";
+            let file = fileSelector.files[0]
+
+            image_src.src = URL.createObjectURL(file);
+
+            image_src.onload = ()=>{
+                console.log(image_src);
+
+                detector.detect(image_src).then((barcodes)=>{
+                    let barcode = barcodes[0];
+                    result.innerHTML = barcode.rawValue;
+                    display_container.style.display = "flex";
+                }).catch((error)=>{ 
+                    console.log(error);
+                })
+            }
+        });
+    </script>
+</body>
+</html>
