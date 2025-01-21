@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen</title>
+</head>
+<body>
+    <center id="main_container" style="margin: 20px auto;">
+        <div>
+            <img src="img.jpg" id="img_src" style="height: 70%; width: 70%;">
+        </div>
+        <button id="btn">Enter Fullscreen</button>
+    </center>
+    <script>
+        const btn = document.getElementById("btn");
+        const container = document.getElementById("main_container");
+        const img = document.getElementById("img_src");
+
+        btn.addEventListener("click", ()=>{
+            container.requestFullscreen().then(()=>{ 
+                btn.style.display = "none";
+                img.style.height = "100%";
+                img.style.width = "100%";
+            })
+        })
+
+        container.addEventListener("fullscreenchange", ()=>{
+            if(!document.fullscreen){
+                btn.style.display = "block";
+                img.style.height = "70%";
+                img.style.width = "70%";
+            }
+        })
+    </script>
+</body>
+</html>
