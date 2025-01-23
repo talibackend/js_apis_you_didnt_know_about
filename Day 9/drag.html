@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .dropzone {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
+        #draggable {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+        }
+
+        #container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Drag and Drop</h1>
+    <div id="container">
+        <div id="dropzone1" class="dropzone">
+            <div id="draggable" draggable="true">Drag Me</div>
+        </div>
+        <div id="dropzone2" class="dropzone"></div>
+    </div>
+
+    <script>
+        const draggable = document.getElementById('draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+
+        draggable.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', e.target.id);
+        });
+
+        dropzones.forEach(dropzone => {
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggedId = e.dataTransfer.getData('text/plain');
+                const draggedElement = document.getElementById(draggedId);
+                dropzone.appendChild(draggedElement);
+            });
+        });
+    </script>
+</body>
+</html>
