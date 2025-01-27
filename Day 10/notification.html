@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+</head>
+<body>
+    <button id="btn">Show Notification</button>
+    <script>
+        const btn = document.getElementById('btn');
+        btn.addEventListener("click", () => {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    showNotification();
+                } else {
+                    alert('Notification permission denied.');
+                }
+            });
+        });
+        
+        function showNotification() {
+            const options = {
+                body: 'This is a simple notification!',
+                icon: 'https://via.placeholder.com/128',
+            };
+
+            const notification = new Notification('Hello!', options);
+
+            notification.onclick = () => {
+                window.focus();
+                console.log('Notification clicked!');
+            };
+        }
+
+    </script>
+</body>
+</html>
